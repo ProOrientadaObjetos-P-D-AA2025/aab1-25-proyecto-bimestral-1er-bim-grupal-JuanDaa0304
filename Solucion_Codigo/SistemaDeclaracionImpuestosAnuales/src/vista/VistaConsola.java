@@ -17,9 +17,9 @@ public class VistaConsola {
             try {
                 num = Double.parseDouble(tcl.nextLine());
                 if (num >= 0) break;
-                else System.out.println("El número no puede ser negativo.");
+                else System.out.println("El numero no puede ser negativo.");
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida.");
+                System.out.println("Entrada invalida.");
             }
         }
         return num;
@@ -30,7 +30,7 @@ public class VistaConsola {
     }
 
     public boolean deseaContinuar() {
-        System.out.print("¿Desea hacer otra declaración? (si/no): ");
+        System.out.print("¿Desea hacer otra declaracion? (si/no): ");
         return tcl.nextLine().equalsIgnoreCase("si");
     }
 }

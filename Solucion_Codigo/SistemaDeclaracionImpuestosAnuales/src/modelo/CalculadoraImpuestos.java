@@ -30,7 +30,8 @@ public class CalculadoraImpuestos {
 
     private int buscarCategoria(String categoria) {
         for (int i = 0; i < categorias.length; i++) {
-            if (categorias[i].equalsIgnoreCase(categoria)) return i;
+            if (categorias[i].equalsIgnoreCase(categoria)) 
+                return i;
         }
         return -1;
     }
