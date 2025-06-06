@@ -3,7 +3,7 @@ package vista;
 import java.util.Scanner;
 
 public class VistaConsola {
-    private Scanner tcl = new Scanner(System.in);
+    public Scanner tcl = new Scanner(System.in);
 
     public String pedirTexto(String mensaje) {
         System.out.print(mensaje);
@@ -16,7 +16,8 @@ public class VistaConsola {
             System.out.print(mensaje);
             try {
                 num = Double.parseDouble(tcl.nextLine());
-                if (num >= 0) break;
+                if (num >= 0) 
+                    break;
                 else System.out.println("El numero no puede ser negativo.");
             } catch (NumberFormatException e) {
                 System.out.println("Entrada invalida.");
@@ -30,7 +31,7 @@ public class VistaConsola {
     }
 
     public boolean deseaContinuar() {
-        System.out.print("¿Desea hacer otra declaracion? (si/no): ");
+        System.out.print("Desea hacer otra declaracion? (si/no): ");
         return tcl.nextLine().equalsIgnoreCase("si");
     }
 }

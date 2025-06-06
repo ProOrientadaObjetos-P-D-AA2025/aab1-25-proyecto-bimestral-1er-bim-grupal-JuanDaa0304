@@ -1,0 +1,28 @@
+=== Declaracion de Impuestos 2023 ===
+Nombre: jose
+Cedula: 333
+--- Sueldos Mensuales ---
+Mes 1: $1600.0
+Mes 2: $0.0
+Mes 3: $0.0
+Mes 4: $0.0
+Mes 5: $0.0
+Mes 6: $0.0
+Mes 7: $0.0
+Mes 8: $0.0
+Mes 9: $0.0
+Mes 10: $0.0
+Mes 11: $0.0
+Mes 12: $0.0
+--- Facturas por Categoría ---
+Vivienda: $1400.0
+Educacion: $0.0
+Alimentacion: $0.0
+Vestimenta: $0.0
+Salud: $0.0
+Turismo: $0.0
+--- Resumen ---
+Ingreso Anual: $1600.0
+Deducciones: $1400.0
+Base Imponible: $200.0
+Impuesto a pagar: $0.0

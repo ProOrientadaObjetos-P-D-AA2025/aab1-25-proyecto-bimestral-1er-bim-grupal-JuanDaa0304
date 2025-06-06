@@ -1,9 +1,28 @@
-========== DECLARACIÓN DE IMPUESTO ==========
-Nombre: juan
+=== Declaracion de Impuestos 2023 ===
+Nombre: jose
 Cédula: 1106020801
-Ingreso anual: $701.0
-Deducciones: $99.0
-Base imponible: $602.0
-Impuesto a pagar: $0.0
-No tiene impuesto a pagar. Puede estar sujeto a devolución si aplica.
-=============================================
+--- Sueldos Mensuales ---
+Mes 1: $2500.0
+Mes 2: $2500.0
+Mes 3: $2500.0
+Mes 4: $2500.0
+Mes 5: $2500.0
+Mes 6: $2500.0
+Mes 7: $2500.0
+Mes 8: $2500.0
+Mes 9: $2500.0
+Mes 10: $2500.0
+Mes 11: $2500.0
+Mes 12: $2500.0
+--- Facturas por Categoria ---
+Vivienda: $0.0
+Educacion: $1200.0
+Alimentacion: $0.0
+Vestimenta: $0.0
+Salud: $1000.0
+Turismo: $0.0
+--- Resumen ---
+Ingreso Anual: $30000.0
+Deducciones: $2200.0
+Base Imponible: $27800.0
+Impuesto a pagar: $1949.9285000000004

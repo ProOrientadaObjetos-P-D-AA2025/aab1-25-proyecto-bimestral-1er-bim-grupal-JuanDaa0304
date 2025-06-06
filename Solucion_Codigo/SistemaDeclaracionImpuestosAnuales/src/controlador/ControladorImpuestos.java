@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 public class ControladorImpuestos {
+
     private VistaConsola vista = new VistaConsola();
 
     public void ejecutar() {
@@ -14,37 +15,100 @@ public class ControladorImpuestos {
         do {
             vista.mostrarMensaje("=== Declaracion de Impuestos 2023 ===");
             String nombre = vista.pedirTexto("Ingrese su nombre: ");
-            String cedula = vista.pedirTexto("Ingrese su cédula: ");
+
+            String cedula;
+            do {
+                cedula = vista.pedirTexto("Ingrese su cedula (10 digitos): ");
+                if (!verificarCedula(cedula)) {
+                    vista.mostrarMensaje("Cedula invalida. Intente nuevamente.");
+                }
+            } while (!verificarCedula(cedula));
 
             CalculadoraImpuestos calc = new CalculadoraImpuestos(nombre, cedula);
 
             vista.mostrarMensaje("--- Ingreso de sueldos mensuales ---");
             for (int i = 1; i <= 12; i++) {
-                double sueldo = vista.pedirNumero("Mes " + i + ": $");
+                boolean valido = false;
+                double sueldo = 0;
+                while (!valido) {
+                    try {
+                        sueldo = vista.pedirNumero("Mes " + i + ": $");
+                        if (sueldo < 0) {
+                            vista.mostrarMensaje("El sueldo no puede ser negativo.");
+                        } else {
+                            valido = true;
+                        }
+                    } catch (Exception e) {
+                        vista.mostrarMensaje("Error: " + e.getMessage());
+                    }
+                }
                 calc.agregarSueldo(i, sueldo);
             }
-
             vista.mostrarMensaje("--- Ingreso de facturas ---");
-            vista.mostrarMensaje("Opciones de categoria: Vivienda, Turismo, Salud, Alimentacion, Educacion, Vestimenta");
+            String[] categoriasValidas = {"Vivienda", "Turismo", "Salud", "Alimentacion", "Educacion", "Vestimenta"};
+
+            vista.mostrarMensaje("Categorias disponibles:");
+            int j = 0;
+            while (j < categoriasValidas.length) {
+                vista.mostrarMensaje("- " + categoriasValidas[j]);
+                j++;
+            }
+
             while (true) {
-                String categoria = vista.pedirTexto("Categoria (o 'fin' para terminar): ");
-                if (categoria.equalsIgnoreCase("fin"))
+                String categoria = vista.pedirTexto("Ingrese una categoria (o 'fin' para terminar): ");
+                if (categoria.equalsIgnoreCase("fin")) {
                     break;
-                double monto = vista.pedirNumero("Monto: $");
+                }
+
+                boolean categoriaEsValida = false;
+                int i = 0;
+                while (i < categoriasValidas.length) {
+                    if (categoria.equalsIgnoreCase(categoriasValidas[i])) {
+                        categoriaEsValida = true;
+                        categoria = categoriasValidas[i]; // Normalizar
+                        break;
+                    }
+                    i++;
+                }
+
+                if (!categoriaEsValida) {
+                    vista.mostrarMensaje("Categoria inválida. Intente de nuevo.");
+                    continue;
+                }
+
+                double monto = 0;
+                boolean montoValido = false;
+                while (!montoValido) {
+                    try {
+                        monto = vista.pedirNumero("Monto: $");
+                        if (monto < 0) {
+                            vista.mostrarMensaje("El monto no puede ser negativo.");
+                        } else {
+                            montoValido = true;
+                        }
+                    } catch (Exception e) {
+                        vista.mostrarMensaje("Error al ingresar monto: " + e.getMessage());
+                    }
+                }
+
                 calc.agregarFactura(categoria, monto);
             }
 
             vista.mostrarMensaje("--- Resumen de Sueldos ---");
             double[] sueldos = calc.getSueldos();
-            for (int i = 0; i < sueldos.length; i++) {
+            int i = 0;
+            while (i < sueldos.length) {
                 vista.mostrarMensaje("Mes " + (i + 1) + ": $" + sueldos[i]);
+                i++;
             }
 
             vista.mostrarMensaje("--- Resumen de Facturas ---");
             String[] categorias = calc.getCategorias();
             double[] montos = calc.getMontosFacturas();
-            for (int i = 0; i < categorias.length; i++) {
+            i = 0;
+            while (i < categorias.length) {
                 vista.mostrarMensaje(categorias[i] + ": $" + montos[i]);
+                i++;
             }
 
             double ingreso = calc.calcularIngresoAnual();
@@ -66,16 +130,20 @@ public class ControladorImpuestos {
 
                 pw.println("=== Declaracion de Impuestos 2023 ===");
                 pw.println("Nombre: " + calc.getNombre());
-                pw.println("Cedula: " + calc.getCedula());
+                pw.println("Cédula: " + calc.getCedula());
 
                 pw.println("--- Sueldos Mensuales ---");
-                for (int i = 0; i < sueldos.length; i++) {
+                i = 0;
+                while (i < sueldos.length) {
                     pw.println("Mes " + (i + 1) + ": $" + sueldos[i]);
+                    i++;
                 }
 
-                pw.println("--- Facturas por Categoría ---");
-                for (int i = 0; i < categorias.length; i++) {
+                pw.println("--- Facturas por Categoria ---");
+                i = 0;
+                while (i < categorias.length) {
                     pw.println(categorias[i] + ": $" + montos[i]);
+                    i++;
                 }
 
                 pw.println("--- Resumen ---");
@@ -85,15 +153,47 @@ public class ControladorImpuestos {
                 pw.println("Impuesto a pagar: $" + impuesto);
 
                 pw.close();
-                vista.mostrarMensaje("Resultados guardados en el archivo: " + nombreArchivo);
+                vista.mostrarMensaje("Archivo guardado: " + nombreArchivo);
             } catch (IOException e) {
                 vista.mostrarMensaje("Error al guardar el archivo: " + e.getMessage());
             }
 
             continuar = vista.deseaContinuar();
-
         } while (continuar);
 
         vista.mostrarMensaje("Gracias por usar el sistema.");
+    }
+
+    private boolean verificarCedula(String cedula) {
+        if (cedula == null || !cedula.matches("\\d{10}")) {
+            return false;
+        }
+
+        int provincia = Integer.parseInt(cedula.substring(0, 2));
+        if (provincia < 1 || provincia > 24) {
+            return false;
+        }
+
+        int tercerDigito = Character.getNumericValue(cedula.charAt(2));
+        if (tercerDigito > 6) {
+            return false;
+        }
+
+        int suma = 0;
+        int i = 0;
+        while (i < 9) {
+            int valor = Character.getNumericValue(cedula.charAt(i));
+            if (i % 2 == 0) {
+                valor *= 2;
+                if (valor > 9) {
+                    valor -= 9;
+                }
+            }
+            suma += valor;
+            i++;
+        }
+
+        int verificador = (10 - (suma % 10)) % 10;
+        return verificador == Character.getNumericValue(cedula.charAt(9));
     }
 }

@@ -7,8 +7,8 @@ public class CalculadoraImpuestos {
     private String[] categorias = {"Vivienda", "Educacion", "Alimentacion", "Vestimenta", "Salud", "Turismo"};
     private double[] montosFacturas = new double[categorias.length];
 
-    private static final double[] DEDUCCION_MAX_CATEGORIA = {3697.0, 3697.0, 3697.0, 3697.0, 15616.0, 3697.0};
-    private static final double DEDUCCION_MAX_TOTAL = 15294.0;
+    private static double[] DEDUCCION_MAX_CATEGORIA = {3697.0, 3697.0, 3697.0, 3697.0, 15616.0, 3697.0};
+    private static double DEDUCCION_MAX_TOTAL = 15294.0;
 
     public CalculadoraImpuestos(String nombre, String cedula) {
         this.nombre = nombre;
