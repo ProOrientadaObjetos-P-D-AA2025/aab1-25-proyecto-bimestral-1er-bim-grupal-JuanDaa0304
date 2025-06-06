@@ -65,7 +65,7 @@ public class ControladorImpuestos {
                 while (i < categoriasValidas.length) {
                     if (categoria.equalsIgnoreCase(categoriasValidas[i])) {
                         categoriaEsValida = true;
-                        categoria = categoriasValidas[i]; // Normalizar
+                        categoria = categoriasValidas[i]; 
                         break;
                     }
                     i++;
