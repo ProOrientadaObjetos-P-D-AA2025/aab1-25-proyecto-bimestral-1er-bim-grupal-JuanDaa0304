@@ -53,25 +53,48 @@ public class CalculadoraImpuestos {
     }
 
     public double calcularImpuesto() {
-        double base = calcularIngresoAnual() - calcularDeducciones();
-        double[][] tabla = {
-            {0, 11722, 0, 0},
-            {11722.01, 14935, 0, 0.05},
-            {14935.01, 18666, 160.65, 0.10},
-            {18666.01, 22418, 606.39, 0.12},
-            {22418.01, 32783, 1142.63, 0.15},
-            {32783.01, 43147, 2872.88, 0.20},
-            {43147.01, 56095, 5645.76, 0.25},
-            {56095.01, 75833, 9703.66, 0.30},
-            {75833.01, Double.MAX_VALUE, 15798.76, 0.37}
-        };
-        for (int i = 0; i < tabla.length; i++) {
-            if (base >= tabla[i][0] && base <= tabla[i][1]) {
-                return tabla[i][2] + (base - tabla[i][0]) * tabla[i][3];
-            }
-        }
+    double ingresoAnual = calcularIngresoAnual();
+    double deducciones = calcularDeducciones();
+
+    double base = ingresoAnual - deducciones;
+
+    double sumaDeduccionesPorCategoria = 0;
+    for (int i = 0; i < categorias.length; i++) {
+        sumaDeduccionesPorCategoria += Math.min(montosFacturas[i], DEDUCCION_MAX_CATEGORIA[i]);
+    }
+
+    if (sumaDeduccionesPorCategoria > DEDUCCION_MAX_TOTAL) {
         return 0.0;
     }
+
+    double[][] tabla = {
+        {0, 11722, 0, 0},
+        {11722.01, 14935, 0, 0.05},
+        {14935.01, 18666, 160.65, 0.10},
+        {18666.01, 22418, 606.39, 0.12},
+        {22418.01, 32783, 1142.63, 0.15},
+        {32783.01, 43147, 2872.88, 0.20},
+        {43147.01, 56095, 5645.76, 0.25},
+        {56095.01, 75833, 9703.66, 0.30},
+        {75833.01, Double.MAX_VALUE, 15798.76, 0.37}
+    };
+
+    double impuestoBase = 0.0;
+    for (int i = 0; i < tabla.length; i++) {
+        if (base >= tabla[i][0] && base <= tabla[i][1]) {
+            impuestoBase = tabla[i][2] + (base - tabla[i][0]) * tabla[i][3];
+            break;
+        }
+    }
+
+    if (sumaDeduccionesPorCategoria < DEDUCCION_MAX_TOTAL) {
+        double porcentaje = (sumaDeduccionesPorCategoria * 100.0) / DEDUCCION_MAX_TOTAL;
+        return (porcentaje * impuestoBase) / 100.0;
+    }
+
+    return impuestoBase;
+}
+
 
     public String[] getCategorias() {
         return categorias;

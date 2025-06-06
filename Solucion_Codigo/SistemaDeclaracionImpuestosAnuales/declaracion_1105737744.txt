@@ -1,0 +1,28 @@
+=== Declaracion de Impuestos 2023 ===
+Nombre: juan
+Cédula: 1105737744
+--- Sueldos Mensuales ---
+Mes 1: $3000.0
+Mes 2: $3000.0
+Mes 3: $3000.0
+Mes 4: $3000.0
+Mes 5: $3000.0
+Mes 6: $3000.0
+Mes 7: $3000.0
+Mes 8: $3000.0
+Mes 9: $3000.0
+Mes 10: $3000.0
+Mes 11: $3000.0
+Mes 12: $3000.0
+--- Facturas por Categoria ---
+Vivienda: $7000.0
+Educacion: $7000.0
+Alimentacion: $7000.0
+Vestimenta: $7000.0
+Salud: $7000.0
+Turismo: $7000.0
+--- Resumen ---
+Ingreso Anual: $36000.0
+Deducciones: $15294.0
+Base Imponible: $20706.0
+Impuesto a pagar: $0.0
